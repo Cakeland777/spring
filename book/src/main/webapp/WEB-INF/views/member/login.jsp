@@ -6,48 +6,71 @@
 <head>
 <meta charset="UTF-8">
 <title>LOGIN</title>
-<link rel="stylesheet" href="/resources/css/member/login.css">
+<!-- <link rel="stylesheet" href="/resources/css/member/login.css"> -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.4.1/css/simple-line-icons.min.css" rel="stylesheet">
+ <link rel="stylesheet" href="/resources/css/member/register.css">
+    <link rel="stylesheet" href="/resources/css/button.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 <script
   src="https://code.jquery.com/jquery-3.4.1.js"
   integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
   crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js"></script>
 </head>
-<body>
+<body class="text-center">
+ <div class="registration-form">
+       <form method="post" name="login_form">
+            <div class="form-icon">
+                <span><i class="icon icon-login"></i></span>
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control item" id="userid"name="userid" placeholder="아이디"  required>
+            </div>
+            <div class="form-group">
+                <input type="password" class="form-control item"  id="pwd"name="pwd" placeholder="비밀번호"  required>
+            </div>
+  
+<div class="button_container" >
 
-<div class="wrapper">
+  <button type="submit" class="btn" id="login_button"><span>로그인</span></button>
+  <button type="button" class="btn" onclick="location.href='/main'" ><span>취소</span></button>
+          </div>
+        </form>
+       </div>
+<!-- <div class="wrapper"> -->
 	
-	<div class="wrap">
+<!-- 	<div class="wrap"> -->
 	
-		<div class="logo_wrap">
-			<span>LOGIN</span>
-		</div>
-		 <form id="login_form" method="post">
-		<div class="login_wrap"> 
-			<div class="id_wrap">
-					<div class="id_input_box">
-					<input type="text" class="id_input" id="userid"name="userid">
-				</div>
-			</div>
-			<div class="pw_wrap">
-				<div class="pw_input_box">
-					<input class="pw_iput" type="password" id="pwd"name="pwd">"
-				</div>
-			</div>
-			<div class="login_button_wrap">
-				<input type="button" class="login_button" value="로그인">
-			</div>			
-		</div>
-		</form>
+<!-- 		<div class="logo_wrap"> -->
+<!-- 			<span>LOGIN</span> -->
+<!-- 		</div> -->
+<!-- 		 <form id="login_form" method="post"> -->
+<!-- 		<div class="login_wrap">  -->
+<!-- 			<div class="id_wrap"> -->
+<!-- 					<div class="id_input_box"> -->
+<!-- 					<input type="text" class="id_input" id="userid"name="userid"> -->
+<!-- 				</div> -->
+<!-- 			</div> -->
+<!-- 			<div class="pw_wrap"> -->
+<!-- 				<div class="pw_input_box"> -->
+<!-- 					<input class="pw_iput" type="password" id="pwd"name="pwd">" -->
+<!-- 				</div> -->
+<!-- 			</div> -->
+<!-- 			<div class="login_button_wrap"> -->
+<!-- 				<input type="button" class="login_button" value="로그인"> -->
+<!-- 			</div>			 -->
+<!-- 		</div> -->
+<!-- 		</form> -->
 		
-	</div>
+<!-- 	</div> -->
 
-</div>
+<!-- </div> -->
 
  
 <script>
  
     /* 로그인 버튼 클릭 메서드 */
-    $(".login_button").click(function(){
+    $("#login_button").click(function(){
     	  $("#login_form").attr("action", "/member/login");
           $("#login_form").submit();
         

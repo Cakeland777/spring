@@ -1,0 +1,156 @@
+@charset "UTF-8";
+.w-btn {
+    position: relative;
+    border: none;
+    display: inline-block;
+    padding: 15px 30px ;
+    margin-bottom:10px;
+    border-radius: 15px;
+    font-family: "paybooc-Light", sans-serif;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    text-decoration: none;
+    font-weight: 500;
+    transition: 0.25s;
+}
+
+a {
+  text-decoration: none;
+}
+  td {
+        text-align: center;
+      }
+ .con:hover{
+      background: lightgrey;
+      color:white;
+      }
+      th{
+      color:white;
+      }
+      
+.w-btn-blue {
+    background-color: lightblue;
+    color: white;
+}
+.w-btn:hover {
+    letter-spacing: 1px;
+    transform: scale(1.1);
+    cursor: pointer;
+}
+
+
+.w-btn:active {
+    transform: scale(1.2);
+}
+
+@import url('https://fonts.googleapis.com/css?family=Amatic+SC');
+
+body {
+  margin: 0;
+  height: 100%;
+  background-image: linear-gradient(to top, #d9afd9 0%, #ADD8E6 100%);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+}
+
+
+
+.description, .link {
+  font-family: 'Amatic SC', cursive;
+  text-align: center;
+}
+
+.description {
+  font-size: 35px;
+}
+
+.btn {
+
+	display :inline-block;
+
+  border: none;
+
+  text-align: center;
+  cursor: pointer;
+  text-transform: uppercase;
+  outline: none;
+  overflow: hidden;
+  position: relative;
+  color: #fff;
+  font-weight: 700;
+  font-size: 15px;
+  background-color: lightblue;
+  padding: 17px 60px;
+  margin: 10px  20px auto;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.20);
+}
+
+.btn1 {
+display :inline-block;
+  border: none;
+  text-align: center;
+  cursor: pointer;
+  text-transform: uppercase;
+  outline: none;
+  overflow: hidden;
+  position: relative;
+  color: #fff;
+  font-weight: 700;
+  font-size: 15px;
+  background-color: LightPink;
+  padding: 17px 60px;
+  margin: 10px  20px auto;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.20);
+}
+.btn span {
+  position: relative; 
+  z-index: 1;
+}
+.button_container{
+	text-align: center;
+	
+}
+.btn:after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 490%;
+  width: 140%;
+  background: #78c7d2;
+  -webkit-transition: all .5s ease-in-out;
+  transition: all .5s ease-in-out;
+  -webkit-transform: translateX(-98%) translateY(-25%) rotate(45deg);
+  transform: translateX(-98%) translateY(-25%) rotate(45deg);
+}
+.btn1:after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 490%;
+  width: 140%;
+
+  background: Salmon;
+  -webkit-transition: all .5s ease-in-out;
+  transition: all .5s ease-in-out;
+  -webkit-transform: translateX(-98%) translateY(-25%) rotate(45deg);
+  transform: translateX(-98%) translateY(-25%) rotate(45deg);
+}
+.btn:hover:after {
+  -webkit-transform: translateX(-9%) translateY(-25%) rotate(45deg);
+  transform: translateX(-9%) translateY(-25%) rotate(45deg);
+}
+.btn1:hover:after {
+  -webkit-transform: translateX(-9%) translateY(-25%) rotate(45deg);
+  transform: translateX(-9%) translateY(-25%) rotate(45deg);
+}
+.link {
+  font-size: 20px;
+  margin-top: 30px;
+}
+
+.link a {
+  color: white;
+  font-size: 25px; 
+}
