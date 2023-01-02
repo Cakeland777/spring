@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.book.mapper.MemberMapper">
+<insert id="InsertMember">
+  		insert into book_member
+  		(userid,pwd,name,email,addr1,addr2,addr3,phone,money,point) 
+  		values(#{userid}, #{pwd}, #{name}, #{email}, #{addr1}, #{addr2}, #{addr3},#{phone},0,5000 )
+
+  	</insert>
+	<select id="idCheck" resultType="int">
+  	
+  		select count(*) from book_member where userid = #{userid}
+  	
+  	</select>
+
+<select id="memberLogin" resultType="com.book.model.MemberVO">
+      
+         select * from book_member where userid = #{userid} and pwd = #{pwd}
+      
+      </select>
+</mapper>
