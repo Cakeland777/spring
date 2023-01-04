@@ -26,4 +26,5 @@ public class MemberService {
 
 		return membermapper.memberLogin(member);
 	}
+
 }

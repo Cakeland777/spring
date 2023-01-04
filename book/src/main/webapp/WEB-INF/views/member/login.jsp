@@ -19,7 +19,7 @@
 </head>
 <body class="text-center">
  <div class="registration-form">
-       <form method="post" name="login_form">
+       <form method="post" id="login_form"name="login_form">
             <div class="form-icon">
                 <span><i class="icon icon-login"></i></span>
             </div>
@@ -37,34 +37,6 @@
           </div>
         </form>
        </div>
-<!-- <div class="wrapper"> -->
-	
-<!-- 	<div class="wrap"> -->
-	
-<!-- 		<div class="logo_wrap"> -->
-<!-- 			<span>LOGIN</span> -->
-<!-- 		</div> -->
-<!-- 		 <form id="login_form" method="post"> -->
-<!-- 		<div class="login_wrap">  -->
-<!-- 			<div class="id_wrap"> -->
-<!-- 					<div class="id_input_box"> -->
-<!-- 					<input type="text" class="id_input" id="userid"name="userid"> -->
-<!-- 				</div> -->
-<!-- 			</div> -->
-<!-- 			<div class="pw_wrap"> -->
-<!-- 				<div class="pw_input_box"> -->
-<!-- 					<input class="pw_iput" type="password" id="pwd"name="pwd">" -->
-<!-- 				</div> -->
-<!-- 			</div> -->
-<!-- 			<div class="login_button_wrap"> -->
-<!-- 				<input type="button" class="login_button" value="로그인"> -->
-<!-- 			</div>			 -->
-<!-- 		</div> -->
-<!-- 		</form> -->
-		
-<!-- 	</div> -->
-
-<!-- </div> -->
 
  
 <script>
