@@ -22,6 +22,7 @@
   src="https://code.jquery.com/jquery-3.4.1.js"
   integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
   crossorigin="anonymous"></script>
+   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js"></script>
 </head>
 <body>
@@ -103,26 +104,26 @@
 		<div class="content_area">
 		
  <div class="registration-form">
-       <form method="post" id="login_form"name="login_form">
+       <form method="post" id="find_form"name="find_form">
             <div class="form-icon">
                 <span><i class="icon icon-login"></i></span>
             </div>
             <div class="form-group">
-                <input type="text" class="form-control item" id="userid"name="userid" placeholder="아이디"  required>
+                <input type="text" class="form-control item" id="name1"name="name1" placeholder="이름"  required>
             </div>
             <div class="form-group">
-                <input type="password" class="form-control item"  id="pwd"name="pwd" placeholder="비밀번호"  required>
+                <input type="text" class="form-control item"  id="phone"name="phone" placeholder="핸드폰번호"  required>
             </div>
   
 <div class="button_container" >
 
-  <button type="submit" class="btn" id="login_button"><span>로그인</span></button>
+  <button type="button" class="btn" id="find_button"><span>찾기</span></button>
   <button type="button" class="btn" onclick="location.href='/main'" ><span>취소</span></button>
    
           </div>
           <br/>
           <div style="text-align:center;">
-          <a href="findPage">아이디 찾기</a> | <a href="findPwd">비밀번호 찾기</a>
+          <a href="#">아이디 찾기</a> | <a href="/member/findPwd">비밀번호 찾기</a>
           </div>
         </form>
        
@@ -130,14 +131,45 @@
 </div>
  
 <script>
- 
+
+$("#find_button").click(function(){
+
+	var name1 = $('#name1').val();
+	var phone = $('#phone').val();
+	var data = {name:name1 , phone:phone};				
+	
+	$.ajax({
+		type : "post",
+		url : "/member/findId",
+		data : data,
+		success : function(result){
+			if(result .length>0){
+				Swal.fire({
+					  position: 'center',
+					  icon:'success',
+					  title: '아이디는'+result+' 입니다',
+					  text: '',
+					  showConfirmButton: true,
+					})
+				
+			} else if(result.length==0) {
+				Swal.fire({
+	          		  position: 'center',
+	          		  icon: 'error',
+	          		  title: '입력값을 확인해주세요',
+	          		  showConfirmButton: false,
+	          		  timer: 1500
+	          		})
+			}
+
+			
+		}// 
+	}); 	
+
+});
+
     /* 로그인 버튼 클릭 메서드 */
-    $("#login_button").click(function(){
-    	  $("#login_form").attr("action", "/member/login");
-          $("#login_form").submit();
-     
-        
-    });
+
  
 </script>
 

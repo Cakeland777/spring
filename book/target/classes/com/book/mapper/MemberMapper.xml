@@ -12,10 +12,46 @@
   		select count(*) from book_member where userid = #{userid}
   	
   	</select>
+  	<select id="selectEmail" resultType="string">
+      
+         select email from book_member where userid = #{userid}
+      
+      </select>
 
 <select id="memberLogin" resultType="com.book.model.MemberVO">
       
          select * from book_member where userid = #{userid} and pwd = #{pwd}
       
       </select>
+<select id="selectPwd" resultType="string">
+      
+         select pwd from book_member where userid = #{userid}
+      
+      </select>
+<delete id="deleteMember" parameterType="String">
+
+delete from book_member where userid = #{userid} 
+
+</delete>
+<update id="updateMember" >
+
+update book_member set 
+name = #{name},pwd=#{pwd},email= #{email}, addr1=#{addr1}, addr2=#{addr2},addr3= #{addr3},phone=#{phone} where userid = #{userid}
+
+</update>
+ <select id="memberList"  resultType="com.book.model.MemberVO">
+        SELECT * FROM book_member
+    </select>
+
+ <select id="findIdByPhone" resultType="string">
+      
+  select userid from book_member where name=#{name} and phone=#{phone}
+      
+ </select>   
+  <update id="resetPwd" >
+
+update book_member set pwd=#{pwd} where userid = #{userid}
+
+</update>     
+    
 </mapper>

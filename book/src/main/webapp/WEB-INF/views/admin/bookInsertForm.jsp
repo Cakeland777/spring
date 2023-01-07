@@ -98,26 +98,106 @@
 	<div class="side_bar" style="margin-top:50px;text-align:center;float: left; width: 15%;">
 		<ul>
            <li ><a href="/admin/userList">가입회원조회</a></li>
-           <li><a href="/admin/bookList">상품목록</a></li>
+            <li><a href="/admin/bookList">상품목록</a></li>
            <li><a href="/admin/books">상품관리</a></li>
            <li><a href="/admin/order">주문관리</a></li>
             <li><a href="/admin/board">게시판관리</a></li>
 
        </ul>
 		</div>
+	
+     <div class="registration-form">
+       <form action="${contextPath}/admin/addNewBook" method="post"  enctype="multipart/form-data">
+       <div class="form-group">
+       제품분류
+            <select name="goods_sort">
+            	
+						<option value="컴퓨터와 인터넷" selected>컴퓨터와 인터넷
+						<option value="디지털 기기">디지털 기기
+					</select>
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control item" name="goods_title"id="goods_title" placeholder="제품이름"  required>
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control item"  id="goods_writer"name="goods_writer"placeholder="저자"  required>
+            </div>
+                <div class="form-group">
+                <input type="text" class="form-control item"  id="goods_publisher"name="goods_publisher" placeholder="출판사"  required>
+            </div>
+                <div class="form-group">
+                <input type="text" class="form-control item"  id="goods_price"name="goods_price" placeholder="제품정가">
+            </div>
+               <div class="form-group">
+                <input type="text" class="form-control item"  id="goods_sales_price"name="goods_sales_price"placeholder="제품판매가격">
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control item"  id="goods_point"name="goods_point"placeholder="제품구매포인트">
+            </div>
+             <div class="form-group">
+                <input type="date" class="form-control item"  id="goods_published_date"name="goods_published_date"placeholder="제품출판일">
+            </div>
+             <div class="form-group">
+                <input type="text" class="form-control item"  id="goods_total_page"name="goods_total_page"placeholder="페이지 수">
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control item"  id="goods_isbn"name="goods_isbn"placeholder="ISBN">
+            </div>
+             <div class="form-group">
+                <input type="text" class="form-control item"  id="goods_delivery_price"name="goods_delivery_price"placeholder="배송비">
+            </div>
+             <div class="form-group">
+                <input type="date" class="form-control item"  id="goods_delivery_date"name="goods_delivery_date"placeholder="도착예정일">
+            </div>
+             <div class="form-group">
+             제품종류
+             <select name="goods_status">
+				  <option value="bestseller"  >베스트셀러</option>
+				  <option value="steadyseller" >스테디셀러</option>
+				  <option value="newbook" selected >신간</option>
+				  <option value="on_sale" >판매중</option>
+				  <option value="buy_out" >품절</option>
+				  <option value="out_of_print" >절판</option>
+				</select>
+             </div>
+              <div class="form-group">
+              책 목차
+                <textarea  rows="8" cols="60" name="goods_contents_order"></textarea>
+            </div>
+            <div class="form-group">
+              저자소개
+                <textarea  rows="8" cols="60" name="goods_writer_intro"></textarea>
+            </div>
+             <div class="form-group">
+              제품소개
+                <textarea  rows="8" cols="60" name="goods_intro"></textarea>
+            </div>
+            <div class="form-group">
+              출판사제품평가
+                <textarea  rows="8" cols="60" name="goods_publisher_comment"></textarea>
+            </div>
+            <div class="form-group">
+              추천사
+                <textarea  rows="8" cols="60" name="goods_recommendation"></textarea>
+            </div>
+             <input type="button"  style="float:right;" value="파일 추가" onClick="fn_addFile()"/>
+            
+             
+             <br/>
+             <div id="d_file">
+				            </div>
+				          <br/>    
+<div class="button_container" >
 
-
-
-			
-			
-			
-			
+  <button type="button" value="상품 등록하기" id="register" class="btn" onClick="fn_add_new_goods(this.form)"></button>
+  <button type="button" class="btn" onclick="location.href='/main'" ><span>취소</span></button>
+          </div>
+        </form>
+       </div>
 		</div>
 	</div>
 </div>
 <script>
- 
-
 
 
     $("#logout_button").click(function(){
@@ -201,5 +281,29 @@
 	}
 
 </script>
+<script type="text/javascript">
+  var cnt=0;
+  function fn_addFile(){
+	  if(cnt == 0){
+		  $("#d_file").append("<br>"+"<input  type='file' name='main_image' id='f_main_image' />");	  
+	  }else{
+		  $("#d_file").append("<br>"+"<input  type='file' name='detail_image"+cnt+"' />");
+	  }
+  	
+  	cnt++;
+  }
+  
+  
+  function fn_add_new_goods(obj){
+		 fileName = $('#f_main_image').val();
+		 if(fileName != null && fileName != undefined){
+			 obj.submit();
+		 }else{
+			 alert("메인 이미지는 반드시 첨부해야 합니다.");
+			 return;
+		 }
+		 
+	}
+</script>    
 </body>
 </html>

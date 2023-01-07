@@ -6,23 +6,19 @@
 <!DOCTYPE html>
 <html>
 <head>
-<style>
-
-</style>
 <meta charset="UTF-8">
 <title>BookMall</title>
 <link rel="stylesheet" href="/resources/css/main.css">
- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
-<link href="https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.4.1/css/simple-line-icons.min.css" rel="stylesheet">
+<link rel="stylesheet" href="/resources/css/member/button.css">
  <link rel="stylesheet" href="/resources/css/member/register.css">
-    <link rel="stylesheet" href="/resources/css/button.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 <script
   src="https://code.jquery.com/jquery-3.4.1.js"
   integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
   crossorigin="anonymous"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js"></script>
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+ <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+     <link rel="stylesheet" href="https://cdn.datatables.net/t/bs-3.3.6/jqc-1.12.0,dt-1.10.11/datatables.min.css"/> 
+    <script src="https://cdn.datatables.net/t/bs-3.3.6/jqc-1.12.0,dt-1.10.11/datatables.min.js"></script>
 </head>
 <body>
 
@@ -47,7 +43,7 @@
                       <a id="logout_button">로그아웃</a>
                     </li>
                     <li>
-                        마이페이지
+                          <a href="/member/mypage">마이페이지</a>
                     </li>
                     <li>
                         장바구니
@@ -80,8 +76,7 @@
 				 <!-- 로그인 하지 않은 상태 -->
                 <c:if test = "${member == null }">
                     <div class="login_button">
-<!--                     <a href="/member/login">로그인</a> -->
-<!--                     <a href="/member/join">회원가입</a>  -->
+
                     </div>
                                   
                 </c:if>   
@@ -89,8 +84,6 @@
                <c:if test="${ member != null }">
                     <div class="login_success_area">
                         <span>${member.name} 님 환영합니다</span>
-<%--                         <span>충전금액 :<fmt:formatNumber value="${member.money }" pattern="\#,###.##"/></span> --%>
-<%--                         <span>포인트 : <fmt:formatNumber value="${member.point }" pattern="#,###" /></span> --%>
                         <a class="logout"href="/member/logout.do">로그아웃</a>
                     </div>
                 </c:if>
@@ -102,50 +95,117 @@
 		</div>
 		<div class="content_area">
 		
- <div class="registration-form">
-       <form method="post" id="login_form"name="login_form">
-            <div class="form-icon">
-                <span><i class="icon icon-login"></i></span>
-            </div>
-            <div class="form-group">
-                <input type="text" class="form-control item" id="userid"name="userid" placeholder="아이디"  required>
-            </div>
-            <div class="form-group">
-                <input type="password" class="form-control item"  id="pwd"name="pwd" placeholder="비밀번호"  required>
-            </div>
-  
-<div class="button_container" >
+	<div class="side_bar" style="margin-top:50px;text-align:center;float: left; width: 15%;">
+		<ul>
+           <li ><a href="/admin/userList">가입회원조회</a></li>
+            <li><a href="/admin/bookList">상품목록</a></li>
+           <li><a href="/admin/books">상품관리</a></li>
+           <li><a href="/admin/order">주문관리</a></li>
+            <li><a href="/admin/board">게시판관리</a></li>
 
-  <button type="submit" class="btn" id="login_button"><span>로그인</span></button>
-  <button type="button" class="btn" onclick="location.href='/main'" ><span>취소</span></button>
-   
-          </div>
-          <br/>
-          <div style="text-align:center;">
-          <a href="findPage">아이디 찾기</a> | <a href="findPwd">비밀번호 찾기</a>
-          </div>
-        </form>
-       
-       </div>
-</div>
- 
-<script>
- 
-    /* 로그인 버튼 클릭 메서드 */
-    $("#login_button").click(function(){
-    	  $("#login_form").attr("action", "/member/login");
-          $("#login_form").submit();
-     
-        
-    });
- 
-</script>
-
+       </ul>
+		</div>
+		<div class="table" style="margin-top:30px;text-align:center;float: right; width: 85%;">
+		<table id="bookTable" class="table table-striped table-bordered table-hover" >
+    <thead>
+        <tr>
+            <th>상품번호</th>
+             <th>제목</th>
+            <th>저자</th>
+            <th>출판사</th>
+            <th>가격</th>
+            <th>페이지</th>
+            <th>분류</th>
+            <th>도서삭제</th>
+        </tr>
+    </thead>
+    <!-- tbody 태그 필요 없다. -->
+</table>
+<button type="button" id="check" class="btn" onclick="location.href='./bookInsertForm'"><span>상품등록</span></button>
+		</div>	
+		</div>
 	</div>
 </div>
 <script>
+var lang_kor = {
+        "decimal" : "",
+        "emptyTable" : "데이터가 없습니다.",
+        "info" : "_START_ - _END_ (총 _TOTAL_ 명)",
+        "infoEmpty" : "0명",
+        "infoFiltered" : "(전체 _MAX_ 명 중 검색결과)",
+        "infoPostFix" : "",
+        "thousands" : ",",
+        "lengthMenu" : "_MENU_ 개씩 보기",
+        "loadingRecords" : "로딩중...",
+        "processing" : "처리중...",
+        "search" : "검색 : ",
+        "zeroRecords" : "검색된 데이터가 없습니다.",
+        "paginate" : {
+            "first" : "첫 페이지",
+            "last" : "마지막 페이지",
+            "next" : "다음",
+            "previous" : "이전"
+        },
+        "aria" : {
+            "sortAscending" : " :  오름차순 정렬",
+            "sortDescending" : " :  내림차순 정렬"
+        }
+    };
  
-   
+$(document).ready(function(){
+    $('#bookTable').dataTable({
+        pageLength: 10,
+        bPaginate: true,
+        bLengthChange: true,
+        lengthMenu : [ [ 3, 5, 10, -1 ], [ 3, 5, 10, "All" ] ],
+        bAutoWidth: false,
+        processing: true,
+        ordering: true,
+        serverSide: false,
+        bInfo : false,
+        language : lang_kor,
+        searching: true,
+        ajax : {
+            url:"/admin/bookList.do",
+            type:"POST",
+            dataSrc:''
+        },
+        columns : [
+        	 { 
+                 "data": "goods_id",
+                 "render": function(data, type, row, meta){
+                	  var Idx = data.goods_id;
+                    if(type === 'display'){
+                        data = '<a href="../books/booksDetail?goods_id='+data+'">' + data+ '</a>';
+                    }
+
+                    return data;
+                 }
+              } ,
+            {data: "goods_title"},
+            {data: "goods_writer"},
+            {data: "goods_publisher"},
+            {data: "goods_price"},
+            {data: "goods_total_page"},
+            {data: "goods_sort"},
+            { 
+                "data": "goods_id",
+                "render": function(data, type, row, meta){
+              
+                   if(type === 'display'){
+                       data = '<a href="/admin/bookDelete?goods_id='+data+'">' +'삭제' + '</a>';
+                   }
+
+                   return data;
+                }
+             }
+
+        ]
+
+    });
+
+});
+
     $("#logout_button").click(function(){
      
         $.ajax({
@@ -159,7 +219,7 @@
             		  showConfirmButton: false,
             		  timer: 1500
             		})
-            		setTimeout("document.location.reload();",1800);
+            		setTimeout("location = '/main';",1800);
     
             } 
         });

@@ -13,12 +13,7 @@
     transition: 0.25s;
 }
 
-a {
-  text-decoration: none;
-}
-  td {
-        text-align: center;
-      }
+
  .con:hover{
       background: lightgrey;
       color:white;
@@ -44,14 +39,7 @@ a {
 
 @import url('https://fonts.googleapis.com/css?family=Amatic+SC');
 
-body {
-  margin: 0;
-  height: 100%;
-  background-image: linear-gradient(to top, #d9afd9 0%, #ADD8E6 100%);
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-attachment: fixed;
-}
+
 
 
 

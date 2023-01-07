@@ -9,6 +9,9 @@
 <!-- <link rel="stylesheet" href="/resources/css/member/join.css"> -->
     <link rel="stylesheet" href="/resources/css/member/register.css">
     <link rel="stylesheet" href="/resources/css/button.css">
+    <link rel="stylesheet" href="/resources/css/main.css">
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
     <link href="https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.4.1/css/simple-line-icons.min.css" rel="stylesheet">
 <script type="text/javascript" src="/resources/js/userCheck.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
@@ -22,6 +25,83 @@
 </head>
 <body>
 
+<div class="wrapper">
+	<div class="wrap">
+		<div class="top_gnb_area">
+			  <ul class="list">
+			  <c:if test="${member==null }">
+                <li >
+                    <a href="/member/login">로그인</a>
+                </li>
+                <li>
+                    <a href="/member/join">회원가입</a>
+                </li>
+                </c:if>
+                 <c:if test="${member != null }">   
+                 
+                    <c:if test="${member.admin_ck == 1 }">
+                        <li><a href="/admin/main">관리자 페이지</a></li>
+                    </c:if>                 
+                    <li>
+                      <a id="logout_button">로그아웃</a>
+                    </li>
+                    <li>
+                        마이페이지
+                    </li>
+                    <li>
+                        장바구니
+                    </li>
+                </c:if>    
+ 
+                
+                <li>
+                    고객센터
+                </li>            
+            </ul>    
+ 
+		</div>
+		<div class="top_area">
+			<div class="logo_area">
+				<a href="/main"><img src="/resources/image/logo.png"  width="150px;" style="margin-left:100px; text-align: center;"></a>
+			</div>
+			<div class="search_area">
+				<form id="search_form" name="search_form" class="search_form" action="${contextPath}/books/searchBooks.do">
+				<input class="search-txt" type="text" name="search" id="search" onKeyUp="keywordSearch()">
+
+	<div  id="suggest">
+        <div id="suggestList"  ></div>
+   				</div>	
+				<button  class="search-btn" type="submit"><i class="fas fa-search"></i></button>
+				</form>
+ 
+			</div>
+			
+			<div class="login_area">
+				 <!-- 로그인 하지 않은 상태 -->
+                <c:if test = "${member == null }">
+                    <div class="login_button">
+<!--                     <a href="/member/login">로그인</a> -->
+<!--                     <a href="/member/join">회원가입</a>  -->
+                    </div>
+                                  
+                </c:if>   
+                <!-- 로그인한 상태 -->
+               <c:if test="${ member != null }">
+                    <div class="login_success_area">
+                        <span>${member.name} 님 환영합니다</span>
+<%--                         <span>충전금액 :<fmt:formatNumber value="${member.money }" pattern="\#,###.##"/></span> --%>
+<%--                         <span>포인트 : <fmt:formatNumber value="${member.point }" pattern="#,###" /></span> --%>
+                        <a class="logout"href="/member/logout.do">로그아웃</a>
+                    </div>
+                </c:if>
+			</div>
+			<div class="clearfix"></div>			
+		</div>
+		<div class="navi_bar_area">
+			
+		</div>
+		<div class="content_area">
+	
      <div class="registration-form">
        <form method="post" id="join_form">
             <div class="form-icon">
@@ -70,7 +150,9 @@
           </div>
         </form>
        </div>
-
+</div>
+</div>
+</div>
 <script>
 var idCheck = false;           
 var idckCheck = false;         
@@ -104,8 +186,7 @@ $(document).ready(function(){
 		  if(pwckcorCheck&&idckCheck){
 			  $("#join_form").attr("action", "/member/join");
 				$("#join_form").submit();
-				  var email = $("#email").val();        // 입력한 이메일
-				    
+				  var email = $("#email").val();        				    
 				    $.ajax({
 				        
 				        type:"GET",
@@ -125,8 +206,8 @@ $(document).ready(function(){
 //아이디 중복검사
 $('#userid').on("propertychange change keyup paste input", function(){
 
-	var userid = $('#userid').val();			// .id_input에 입력되는 값
-	var data = {userid : userid}				// '컨트롤에 넘길 데이터 이름' : '데이터(.id_input에 입력되는 값)'
+	var userid = $('#userid').val();			
+	var data = {userid : userid}				
 	
 	$.ajax({
 		type : "post",
@@ -175,30 +256,28 @@ function search_address(){
     new daum.Postcode({
         oncomplete: function(data) {
         	 
-        	// 각 주소의 노출 규칙에 따라 주소를 조합한다.
-        	                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+        
         	                var addr = ''; // 주소 변수
         	                var extraAddr = ''; // 참고항목 변수
         	 
-        	                //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
-        	                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+        	          
+        	                if (data.userSelectedType === 'R') { 
         	                    addr = data.roadAddress;
         	                } else { // 사용자가 지번 주소를 선택했을 경우(J)
         	                    addr = data.jibunAddress;
         	                }
         	 
-        	                // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
+        	               
         	                if(data.userSelectedType === 'R'){
-        	                    // 법정동명이 있을 경우 추가한다. (법정리는 제외)
-        	                    // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+        	                   
         	                    if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
         	                        extraAddr += data.bname;
         	                    }
-        	                    // 건물명이 있고, 공동주택일 경우 추가한다.
+        	           
         	                    if(data.buildingName !== '' && data.apartment === 'Y'){
         	                        extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
         	                    }
-        	                    // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+        	                  
         	                    if(extraAddr !== ''){
         	                        extraAddr = ' (' + extraAddr + ')';
         	                    }

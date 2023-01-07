@@ -17,4 +17,6 @@ public interface BookMapper {
 	public BookVO selectGoodsDetail(String goods_id);
 
 	public List<ImageFileVO> selectGoodsDetailImage(String goods_id);
+
+	public List<BookVO> bookList();
 }

@@ -30,6 +30,15 @@ public class BookService {
 
 	}
 
+	public Map goodsDetail(String _goods_id) throws Exception {
+		Map goodsMap = new HashMap();
+		BookVO booksVO = bookMapper.selectGoodsDetail(_goods_id);
+		goodsMap.put("booksVO", booksVO);
+		List<ImageFileVO> imageList = bookMapper.selectGoodsDetailImage(_goods_id);
+		goodsMap.put("imageList", imageList);
+		return goodsMap;
+	}
+
 	public List<BookVO> selectGoodsList(String goodsStatus) throws DataAccessException {
 
 		return bookMapper.selectGoodsList(goodsStatus);
@@ -52,4 +61,8 @@ public class BookService {
 		return bookMapper.selectGoodsDetailImage(goods_id);
 	}
 
+	public List<BookVO> bookList() throws Exception {
+
+		return bookMapper.bookList();
+	}
 }

@@ -81,7 +81,9 @@
 		]]>
 	</select>
 
-
+<select id="bookList"  resultType="com.book.model.BookVO">
+        select * FROM t_shopping_goods
+    </select>
 
 
 

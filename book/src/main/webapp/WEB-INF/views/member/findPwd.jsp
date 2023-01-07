@@ -22,6 +22,7 @@
   src="https://code.jquery.com/jquery-3.4.1.js"
   integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
   crossorigin="anonymous"></script>
+   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js"></script>
 </head>
 <body>
@@ -103,7 +104,7 @@
 		<div class="content_area">
 		
  <div class="registration-form">
-       <form method="post" id="login_form"name="login_form">
+       <form method="post" id="find_form"name="find_form">
             <div class="form-icon">
                 <span><i class="icon icon-login"></i></span>
             </div>
@@ -111,60 +112,178 @@
                 <input type="text" class="form-control item" id="userid"name="userid" placeholder="아이디"  required>
             </div>
             <div class="form-group">
-                <input type="password" class="form-control item"  id="pwd"name="pwd" placeholder="비밀번호"  required>
+                <input type="email" class="form-control item"  disabled="disabled"id="email"name="email" placeholder="이메일"  required>
             </div>
-  
+            <font id="checkEmail" size="2"></font>
+     <button type="button" class="btn" id="mailbutton" disabled="disabled"><span>인증번호 전송</span></button>
+     <font class="time" size="2"></font>
+   <div class="form-group">
+                <input type="text" class="form-control item" disabled="disabled" id="code" name="code" placeholder="인증번호"  required>
+                <font id="checkCode" size="2"></font>
+            </div>
 <div class="button_container" >
 
-  <button type="submit" class="btn" id="login_button"><span>로그인</span></button>
+  <button type="button" class="btn" disabled="disabled" id="find_button"><span>초기화</span></button>
   <button type="button" class="btn" onclick="location.href='/main'" ><span>취소</span></button>
    
           </div>
           <br/>
           <div style="text-align:center;">
-          <a href="findPage">아이디 찾기</a> | <a href="findPwd">비밀번호 찾기</a>
+          <a href="/member/findPage">아이디 찾기</a> | <a href="/member/findPwd">비밀번호 찾기</a>
           </div>
         </form>
        
        </div>
 </div>
  
-<script>
- 
-    /* 로그인 버튼 클릭 메서드 */
-    $("#login_button").click(function(){
-    	  $("#login_form").attr("action", "/member/login");
-          $("#login_form").submit();
-     
-        
-    });
- 
-</script>
+
 
 	</div>
 </div>
 <script>
- 
-   
-    $("#logout_button").click(function(){
-     
-        $.ajax({
-            type:"POST",
-            url:"/member/logout.do",
-            success:function(data){
-            	Swal.fire({
-            		  position: 'center',
-            		  icon: 'success',
-            		  title: '로그아웃 되었습니다',
-            		  showConfirmButton: false,
-            		  timer: 1500
-            		})
-            		setTimeout("document.location.reload();",1800);
+var code = ""; 
+$('#userid').on("propertychange change keyup paste input", function(){
+	var userid=$('#userid').val();
+			
+	var data = {userid:userid}				
+	
+	$.ajax({
+		type : "post",
+		url : "/member/useridCheck",
+		data : data,
+		success : function(result){
+			if(result == "fail"){
+				
+				  $("#email").attr("disabled", false);
+			  }else{
+				
+				  $("#email").attr("disabled", true);
+			  }
+		  
+			
+		}
+	}); 	
+
+});	
+$('#email').on("propertychange change keyup paste input", function(){
+	var userid=$('#userid').val();
+	var email = $('#email').val();			
+	var data = {userid:userid, email: email}				
+	
+	$.ajax({
+		type : "post",
+		url : "/member/userEmailCheck",
+		data : data,
+		success : function(result){
+			if(result == "fail"){
+				  $("#checkEmail").html('값이 다릅니다');
+				  $("#checkEmail").attr('color','red');
+				  $("#mailbutton").attr("disabled", true);
+			  }else{
+				  $("#checkEmail").html('');
+				  
+				  $("#mailbutton").attr("disabled", false);
+			  }
+		  
+			
+		}
+	}); 	
+
+});	
+$("#mailbutton").click(function(){
     
-            } 
-        });
+    var email = $('#email').val();	        // 입력한 이메일
+ 
+
+        $.ajax({
+            
+            type:"GET",
+            url:"mailCheck?email=" + email,
+            success:function(data){
+            	 $("#code").attr("disabled", false);
+            	 code = data;
+            }
+                
     });
     
+});
+
+/* 인증번호 비교 */
+$("#code").blur(function(){
+    
+    var inputCode = $("#code").val();           
+        
+    
+    if(inputCode != code){                            
+    	$("#checkCode").html('값이 다릅니다');
+		  $("#checkCode").attr('color','red');
+		  $("#find_button").attr("disabled", true);        
+    } else {                                            
+    	$("#checkCode").html('값이 일치합니다');
+		  $("#checkCode").attr('color','green');
+		  $("#find_button").attr("disabled", false);  
+    }    
+    
+});
+$("#find_button").click(function(){
+	  $("#find_form").attr("action", "/member/pwdResetForm");
+    $("#find_form").submit();
+
+  
+});
+  
+
+var timer = null;
+var isRunning = false;
+$(function(){
+
+	    $("#mailbutton").click(function(e){
+    	var display = $('.time');
+    	var leftSec = 300;
+    
+    	if (isRunning){
+    		clearInterval(timer);
+    		display.html("");
+    		startTimer(leftSec, display);
+    	}else{
+    	startTimer(leftSec, display);
+    		
+    	}
+    });
+})
+
+    
+function startTimer(count, display) {
+            
+    		var minutes, seconds;
+            timer = setInterval(function () {
+            minutes = parseInt(count / 60, 10);
+            seconds = parseInt(count % 60, 10);
+     
+            minutes = minutes < 10 ? "0" + minutes : minutes;
+            seconds = seconds < 10 ? "0" + seconds : seconds;
+     
+            display.html(minutes + ":" + seconds);
+      	 display.attr('color','red');	
+      
+            if (--count < 0) {
+    	     clearInterval(timer);
+    	     Swal.fire({
+		    	  position: 'center',
+		    	  icon: 'error',
+		    	  title: '시간초과',
+		    	  showConfirmButton: false,
+		    	  timer: 1500
+		    	})
+    	     display.html("시간초과");
+    	     $('#find_button').attr("disabled","disabled");
+    	     $('#code').attr("disabled","disabled");
+    	     isRunning = false;
+            }
+        }, 1000);
+             isRunning = true;
+}
+ 
 </script>
 <script type="text/javascript">
 	var loopSearch=true;

@@ -9,8 +9,8 @@
 <meta charset="UTF-8">
 <title>BookMall</title>
 <link rel="stylesheet" href="resources/css/main.css">
-
- 
+<link rel="stylesheet" href="resources/css/member/button.css">
+ <link rel="stylesheet" href="resources/css/member/register.css">
 <script
   src="https://code.jquery.com/jquery-3.4.1.js"
   integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
@@ -41,7 +41,7 @@
                       <a id="logout_button">로그아웃</a>
                     </li>
                     <li>
-                        마이페이지
+                          <a href="/member/mypage">마이페이지</a>
                     </li>
                     <li>
                         장바구니
@@ -62,9 +62,6 @@
 			<div class="search_area">
 				<form id="search_form" name="search_form" class="search_form" action="${contextPath}/books/searchBooks.do">
 				<input class="search-txt" type="text" name="search" id="search" onKeyUp="keywordSearch()">
-<!-- 				<div  style=" width:300px;z-index:1000;margin-right:1000px; margin-top: 80px;"id="suggest"> -->
-<!--         <div id="suggestList"  ></div> -->
-<!--    </div>				 -->
 	<div  id="suggest">
         <div id="suggestList"  ></div>
    				</div>	
@@ -77,8 +74,7 @@
 				 <!-- 로그인 하지 않은 상태 -->
                 <c:if test = "${member == null }">
                     <div class="login_button">
-<!--                     <a href="/member/login">로그인</a> -->
-<!--                     <a href="/member/join">회원가입</a>  -->
+
                     </div>
                                   
                 </c:if>   
@@ -86,8 +82,6 @@
                <c:if test="${ member != null }">
                     <div class="login_success_area">
                         <span>${member.name} 님 환영합니다</span>
-<%--                         <span>충전금액 :<fmt:formatNumber value="${member.money }" pattern="\#,###.##"/></span> --%>
-<%--                         <span>포인트 : <fmt:formatNumber value="${member.point }" pattern="#,###" /></span> --%>
                         <a class="logout"href="/member/logout.do">로그아웃</a>
                     </div>
                 </c:if>
@@ -113,7 +107,7 @@
 	<c:forEach var="item" items="${goodsMap.bestseller }">
 	   <c:set  var="goods_count" value="${goods_count+1 }" />
 		<div class="book">
-			<a href="${contextPath}/goods/goodsDetail.do?goods_id=${item.goods_id }">
+			<a href="${contextPath}/books/booksDetail?goods_id=${item.goods_id }">
 			<img class="link"  src="${contextPath}/resources/image/1px.gif"> 
 			</a> 
 				<img width="121" height="154" 
@@ -142,7 +136,7 @@
 	<c:forEach var="item" items="${goodsMap.newbook }" >
 	   <c:set  var="goods_count" value="${goods_count+1 }" />
 		<div class="book">
-		  <a href="${contextPath}/goods/goodsDetail.do?goods_id=${item.goods_id }">
+		  <a href="${contextPath}/books/booksDetail?goods_id=${item.goods_id }">
 	       <img class="link"  src="${contextPath}/resources/image/1px.gif"> 
 	      </a>
 		 <img width="121" height="154" 
@@ -173,7 +167,7 @@
 	<c:forEach var="item" items="${goodsMap.steadyseller }" >
 	   <c:set  var="goods_count" value="${goods_count+1 }" />
 		<div class="book">
-		  <a href="${contextPath}/goods/goodsDetail.do?goods_id=${item.goods_id }">
+		  <a href="${contextPath}/books/booksDetail?goods_id=${item.goods_id }">
 	       <img class="link"  src="${contextPath}/resources/image/1px.gif"> 
 	      </a>
 		 <img width="121" height="154" 
@@ -260,7 +254,16 @@
 		    hide('suggest');
 		} 
 	}
-	
+	$("#search").on("propertychange change keyup paste input",function(){
+	    
+	    var inputCode = $("#search").val();           
+	        
+	    
+	    if(inputCode.length==0){                            
+	    	 hide('suggest');       
+	    } 
+	    
+	});
 	function select(selectedKeyword) {
 		 document.search_form.search.value=selectedKeyword;
 		 loopSearch = true;

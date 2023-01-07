@@ -18,9 +18,17 @@
     height: 50px;
     background-color: #f0f0f1;
 }
+
+#mail_check_input_box_false{
+    background-color:#ebebe4;
+}
+ 
+#mail_check_input_box_true{
+    background-color:white;
+}
 /* 메뉴*/
 a{
-    text-decoration: none;
+    text-decoration-line : none;
 }
  
 .top_gnb_area{
@@ -43,6 +51,7 @@ a{
 }
  
  
+ .side_bar{float:left;}
 /* 로고, 검색, 로그인 */
 .top_area{
 	width: 100%;
@@ -157,6 +166,7 @@ a{
 	width: 100%;
     background-color:white;
     height: 1000px;
+   
 }
 
 /* float 속성 해제 */
