@@ -1,147 +1,116 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-    <c:set var="contextPath"  value="${pageContext.request.contextPath}"  />
-    <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %> 
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:set var="contextPath" value="${pageContext.request.contextPath}" />
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <c:set var="goods"  value="${goodsMap.booksVO}"  />
 <c:set var="imageList"  value="${goodsMap.imageList }"  />
+
  <%
      //치환 변수 선언합니다.
       //pageContext.setAttribute("crcn", "\r\n"); //개행문자
       pageContext.setAttribute("crcn" , "\n"); //Ajax로 변경 시 개행 문자 
       pageContext.setAttribute("br", "<br/>"); //br 태그
 %>  
-<!DOCTYPE html>
+<!DOCTYPE HTML>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>BookMall</title>
-<link rel="stylesheet" href="/resources/css/main.css">
-<link rel="stylesheet" href="/resources/css/member/button.css">
- <link rel="stylesheet" href="/resources/css/member/register.css">
-<script
-  src="https://code.jquery.com/jquery-3.4.1.js"
-  integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
-  crossorigin="anonymous"></script>
- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
- <style>
-#layer {
-	z-index: 2;
-	position: absolute;
-	top: 0px;
-	left: 0px;
-	width: 100%;
-}
+<title>도서상세</title>
+<meta charset="utf-8" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, user-scalable=no" />
+<link rel="stylesheet" href="/resources/assets/css/main.css" />
+<script src="https://code.jquery.com/jquery-3.4.1.js"
+	integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+	crossorigin="anonymous"></script>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+	integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+	crossorigin="anonymous" referrerpolicy="no-referrer" />
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css">
+   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.css">
+  
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.js"></script>
+<style>
+html,body {width:100%;  }
+body,div,ul,li{margin:0; padding:0;}
+ul,li {list-style:none;}
 
-#popup {
-	z-index: 3;
-	position: fixed;
-	text-align: center;
-	left: 50%;
-	top: 45%;
-	width: 300px;
-	height: 200px;
-	background-color: #ccffff;
-	border: 3px solid #87cb42;
-}
-
-#close {
-	z-index: 4;
-	float: right;
-}
+/*tab css*/
+.tab{float:left; width:750px; height:500px;}
+.tabnav{font-size:0; width:750px; border:1px solid #ddd;}
+.tabnav li{display: inline-block;  height:46px; text-align:center; border-right:1px solid #ddd;}
+.tabnav li a:before{content:""; position:absolute; left:0; top:0px; width:100%; height:3px; }
+.tabnav li a.active:before{background:#f56a6a;}
+.tabnav li a.active{border-bottom:1px solid #fff;}
+.tabnav li a{ position:relative; display:block; background: #f8f8f8; color: #000; padding:0 30px; line-height:46px; text-decoration:none; font-size:16px;}
+.tabnav li a:hover,
+.tabnav li a.active{background:#fff; color:#f56a6a; }
+.tabcontent{padding: 20px;width:750px;  height:1000px ; border:1px solid #ddd; border-top:none;}
 </style>
 </head>
-<body>
+<body class="is-preload">
 
-<div class="wrapper">
-	<div class="wrap">
-		<div class="top_gnb_area">
-			  <ul class="list">
-			  <c:if test="${member==null }">
-                <li >
-                    <a href="/member/login">로그인</a>
-                </li>
-                <li>
-                    <a href="/member/join">회원가입</a>
-                </li>
-                </c:if>
-                 <c:if test="${member != null }">   
+	<!-- Wrapper -->
+	<div id="wrapper">
+
+		<!-- Main -->
+		<div id="main">
+			<div class="inner">
+
+				<!-- Header -->
+				<header id="header">
+			<a href="/main" class="logo"><i class="bi bi-house-fill"></i></a>
+					<ul class="icons">
+					  <c:if test="${member==null }">
+						<li><a href="/member/login" ><span
+								class="label">로그인</span></a></li>
+						<li><a href="/member/join"><span
+								class="label">회원가입</span></a></li>
+								   </c:if>
+								    <c:if test="${member != null }">   
                  
                     <c:if test="${member.admin_ck == 1 }">
-                        <li><a href="/admin/main">관리자 페이지</a></li>
-                    </c:if>                 
-                    <li>
-                      <a id="logout_button">로그아웃</a>
-                    </li>
-                    <li>
-                          <a href="/member/mypage">마이페이지</a>
-                    </li>
-                    <li>
-                        장바구니
-                    </li>
-                </c:if>    
- 
-                
-                <li>
-                    고객센터
-                </li>            
-            </ul>    
- 
-		</div>
-		<div class="top_area">
-			<div class="logo_area">
-				<a href="/main"><img src="/resources/image/logo.png"  width="150px;" style="margin-left:100px; text-align: center;"></a>
-			</div>
-			<div class="search_area">
-				<form id="search_form" name="search_form" class="search_form" action="${contextPath}/books/searchBooks.do">
-				<input class="search-txt" type="text" name="search" id="search" onKeyUp="keywordSearch()">
-	<div  id="suggest">
-        <div id="suggestList"  ></div>
-   				</div>	
-				<button  class="search-btn" type="submit"><i class="fas fa-search"></i></button>
-				</form>
- 
-			</div>
-			
-			<div class="login_area">
-				 <!-- 로그인 하지 않은 상태 -->
-                <c:if test = "${member == null }">
-                    <div class="login_button">
+						<li><a href="/admin/main"><span
+								class="label">관리자페이지</span></a></li>
+								    </c:if>    
+						<li><a href="/member/mypage"  ><span
+								class="label">마이페이지</span></a></li>
+						
+								<li><a href="/cart/myCartList"  ><span
+								class="label">장바구니</span></a></li>
+						<li><a id="logout_button" ><span
+								class="label">로그아웃</span></a></li>
+								   </c:if>  
+					</ul>
+				</header>
 
-                    </div>
-                                  
-                </c:if>   
-                <!-- 로그인한 상태 -->
-               <c:if test="${ member != null }">
-                    <div class="login_success_area">
-                        <span>${member.name} 님 환영합니다</span>
-                        <a class="logout"href="/member/logout.do">로그아웃</a>
-                    </div>
-                </c:if>
-			</div>
-			<div class="clearfix"></div>			
-		</div>
-		<div class="navi_bar_area">
+				<!-- Banner -->
 			
-		</div>
-		<div class="content_area">
-	<div class="booksdetail" style="padding: 70px;">	
+		
+				<section>
+					<header class="major">
+						<h2>${goods.goods_title }</h2>
+					</header>
+					<div class="features">
+
+						<article>
+							
+							<div class="content">
+					
+												<div class="booksdetail">	
 <hgroup>
-		<h1>컴퓨터와 인터넷</h1>
-		<h2>국내외 도서 &gt; 컴퓨터와 인터넷 &gt; 웹 개발</h2>
-		<br/>
-		<h3>${goods.goods_title }</h3>
 		<h4>${goods.goods_writer} &nbsp; 저| ${goods.goods_publisher}</h4>
 	</hgroup>
-	<div id="goods_image">
-		<figure>
+	<div id="goods_image" > 
+		<figure >
 			<img alt="HTML5 &amp; CSS3"
 				src="${contextPath}/thumbnails.do?goods_id=${goods.goods_id}&fileName=${goods.goods_fileName}">
 		</figure>
 	</div>
-	<div id="detail_table">
+	<div id="detail_table"  >
 		<table>
 			<tbody>
 				<tr>
@@ -197,8 +166,8 @@
 				<tr>
 					<td class="fixed">수량</td>
 					<td class="fixed">
-			      <select style="width: 60px;" id="order_goods_qty">
-				      <option>1</option>
+			      <select style="width: 80px;" id="order_goods_qty">
+				      <option selected="selected">1</option>
 							<option>2</option>
 							<option>3</option>
 							<option>4</option>
@@ -208,26 +177,24 @@
 				</tr>
 			</tbody>
 		</table>
-		<ul>
-			<li><a class="buy" href="javascript:fn_order_each_goods('${goods.goods_id }','${goods.goods_title }','${goods.goods_sales_price}','${goods.goods_fileName}');">구매하기 </a></li>
-			<li><a class="cart" href="javascript:add_cart('${goods.goods_id }')">장바구니</a></li>
-			
-			<li><a class="wish" href="#">위시리스트</a></li>
-		</ul>
+		<div style="display: flex;">
+			<a style="flex: 1; margin: 20px;" class="button" href="javascript:fn_order_each_goods('${goods.goods_id }','${goods.goods_title }','${goods.goods_sales_price}','${goods.goods_fileName}');">구매하기 </a>
+			<a style="flex: 1; margin: 20px;" class="button" href="javascript:add_cart('${goods.goods_id }')">장바구니</a></li>
+		</div>
 	</div>
 	<div class="clear"></div>
 	<!-- 내용 들어 가는 곳 -->
-	<div id="container">
-		<ul class="tabs">
-			<li><a href="#tab1">책소개</a></li>
-			<li><a href="#tab2">저자소개</a></li>
-			<li><a href="#tab3">책목차</a></li>
-			<li><a href="#tab4">출판사서평</a></li>
-			<li><a href="#tab5">추천사</a></li>
-			<li><a href="#tab6">리뷰</a></li>
+	<div id="container" class="tab">
+		<ul class="tabnav">
+			<li><a href="#tab01">책소개</a></li>
+			<li><a href="#tab02">저자소개</a></li>
+<!-- 			<li><a href="#tab03">책목차</a></li> -->
+			<li><a href="#tab04">출판사서평</a></li>
+			<li><a href="#tab05">추천사</a></li>
+			<li><a href="#tab06">Q&A</a></li>
 		</ul>
-		<div class="tab_container">
-			<div class="tab_content" id="tab1">
+		<div class="tabcontent">
+			<div class="tab_content" id="tab01">
 				<h4>책소개</h4>
 				<p>${fn:replace(goods.goods_intro,crcn,br)}</p>
 				<c:forEach var="image" items="${imageList }">
@@ -235,27 +202,53 @@
 						src="${contextPath}/download.do?goods_id=${goods.goods_id}&fileName=${image.fileName}">
 				</c:forEach>
 			</div>
-			<div class="tab_content" id="tab2">
+			<div class="tab_content" id="tab02">
 				<h4>저자소개</h4>
 				<p>
 				<div class="writer">저자 : ${goods.goods_writer}</div>
 				 <p>${fn:replace(goods.goods_writer_intro,crcn,br) }</p> 
 				
 			</div>
-			<div class="tab_content" id="tab3">
-				<h4>책목차</h4>
-				<p>${fn:replace(goods.goods_contents_order,crcn,br)}</p> 
-			</div>
-			<div class="tab_content" id="tab4">
+<!-- 			<div class="tab_content" id="tab03"> -->
+<!-- 				<h4>책목차</h4> -->
+<%-- 				<p>${fn:replace(goods.goods_contents_order,crcn,br)}</p>  --%>
+<!-- 			</div> -->
+			<div class="tab_content" id="tab04">
 				<h4>출판사서평</h4>
 				 <p>${fn:replace(goods.goods_publisher_comment ,crcn,br)}</p> 
 			</div>
-			<div class="tab_content" id="tab5">
+			<div class="tab_content" id="tab05">
 				<h4>추천사</h4>
 				<p>${fn:replace(goods.goods_recommendation,crcn,br) }</p>
 			</div>
-			<div class="tab_content" id="tab6">
-				<h4>리뷰</h4>
+			<div class="tab_content" id="tab06">
+				<h4>Q&A</h4>
+				<c:if test="${member!=null }">
+				<form id="reviewForm" method="post" name="reviewForm">
+				<input type="hidden"value="${goods.goods_id}" id="goods_id" name="goods_id" readonly="readonly" >
+					<input type="text" value="${member.userid}" id="userid" name="userid" readonly="readonly">
+					<br/>
+				<input type="text" placeholder="제목을 입력하세요" id="title" name="title">
+				<br/>
+				<textarea placeholder="내용을 입력하세요" id="content" name="content"></textarea>
+				<button type="submit" id="register"
+											class="button primary large">등록하기</button>
+				</form>
+				</c:if>
+		<table id="reviewTable">
+    <thead>
+        <tr>
+        
+        <th>제목</th>
+            <th>작성자</th>
+           <th>상세</th>
+            
+
+        </tr>
+    </thead>
+    <!-- tbody 태그 필요 없다. -->
+</table>
+		
 			</div>
 		</div>
 	</div>
@@ -274,91 +267,382 @@
 			</div>
 		</div>	
 		</div>
-	</div>
-</div>
-<script>
- 
-   
-    $("#logout_button").click(function(){
-     
-        $.ajax({
-            type:"POST",
-            url:"/member/logout.do",
-            success:function(data){
-            	Swal.fire({
-            		  position: 'center',
-            		  icon: 'success',
-            		  title: '로그아웃 되었습니다',
-            		  showConfirmButton: false,
-            		  timer: 1500
-            		})
-            		setTimeout("document.location.reload();",1800);
-    
-            } 
-        });
-    });
-    
-</script>
-<script type="text/javascript">
-	var loopSearch=true;
-	function keywordSearch(){
-		if(loopSearch==false)
-			return;
-	 var value=document.search_form.search.value;
-		$.ajax({
-			type : "get",
-			async : true, 
-			url : "${contextPath}/books/keywordSearch.do",
-			data : {keyword:value},
-			success : function(data, textStatus) {
-			    var jsonInfo = JSON.parse(data);
-				displayResult(jsonInfo);
-			},
-			error : function(data, textStatus) {
-				alert("에러가 발생했습니다."+data);
-			},
-			complete : function(data, textStatus) {
-				
-				
-			}
-		}); 	
-	}
-	
-	function displayResult(jsonInfo){
-		var count = jsonInfo.keyword.length;
-		if(count > 0) {
-		    var html = '';
-		    for(var i in jsonInfo.keyword){
-			   html += "<a href=\"javascript:select('"+jsonInfo.keyword[i]+"')\">"+jsonInfo.keyword[i]+"</a><br/>";
-		    }
-		    var listView = document.getElementById("suggestList");
-		    listView.innerHTML = html;
-		    show('suggest');
-		}else{
-		    hide('suggest');
-		} 
-	}
-	
-	function select(selectedKeyword) {
-		 document.search_form.search.value=selectedKeyword;
-		 loopSearch = true;
-		 hide('suggest');
-	}
+							</div>
+						</article>
+			
+					</div>
+				</section>
+
+				<!-- Section -->
 		
-	function show(elementId) {
-		 var element = document.getElementById(elementId);
-		 if(element) {
-		  element.style.display = 'block';
-		 }
+
+			</div>
+		</div>
+
+		<!-- Sidebar -->
+		<div id="sidebar">
+			<div class="inner">
+
+				<!-- Search -->
+				<section id="search" class="alt">
+					<form id="search_form" name="search_form" class="search_form"
+						 action="${contextPath}/books/searchBooks">
+						<input onKeyUp="keywordSearch()" type="text" name="query"
+							id="query" placeholder="Search" />
+						<button class="search-btn" type="submit">
+							<i class="fas fa-search"></i>
+						</button>
+						<div id="suggest">
+							<div id="suggestList"></div>
+						</div>
+
+					</form>
+
+				</section>
+
+				<!-- Menu -->
+				<nav id="menu">
+					<header class="major">
+						<h2>Menu</h2>
+					</header>
+					<ul>
+						<li><a href="index.html">Homepage</a></li>
+						<li><a href="generic.html">Generic</a></li>
+						<li><a href="elements.html">Elements</a></li>
+						<li><span class="opener">Submenu</span>
+							<ul>
+								<li><a href="#">Lorem Dolor</a></li>
+								<li><a href="#">Ipsum Adipiscing</a></li>
+								<li><a href="#">Tempus Magna</a></li>
+								<li><a href="#">Feugiat Veroeros</a></li>
+							</ul></li>
+						<li><a href="#">Etiam Dolore</a></li>
+						<li><a href="#">Adipiscing</a></li>
+						<li><span class="opener">Another Submenu</span>
+							<ul>
+								<li><a href="#">Lorem Dolor</a></li>
+								<li><a href="#">Ipsum Adipiscing</a></li>
+								<li><a href="#">Tempus Magna</a></li>
+								<li><a href="#">Feugiat Veroeros</a></li>
+							</ul></li>
+						<li><a href="#">Maximus Erat</a></li>
+						<li><a href="#">Sapien Mauris</a></li>
+						<li><a href="#">Amet Lacinia</a></li>
+					</ul>
+				</nav>
+
+				<!-- Section -->
+				<section>
+					<header class="major">
+						<h2>Ante interdum</h2>
+					</header>
+					<div class="mini-posts">
+						<article>
+							<a href="#" class="image"><img src="images/pic07.jpg" alt="" /></a>
+							<p>Aenean ornare velit lacus, ac varius enim lorem
+								ullamcorper dolore aliquam.</p>
+						</article>
+						<article>
+							<a href="#" class="image"><img src="images/pic08.jpg" alt="" /></a>
+							<p>Aenean ornare velit lacus, ac varius enim lorem
+								ullamcorper dolore aliquam.</p>
+						</article>
+						<article>
+							<a href="#" class="image"><img src="images/pic09.jpg" alt="" /></a>
+							<p>Aenean ornare velit lacus, ac varius enim lorem
+								ullamcorper dolore aliquam.</p>
+						</article>
+					</div>
+					<ul class="actions">
+						<li><a href="#" class="button">More</a></li>
+					</ul>
+				</section>
+
+				<!-- Section -->
+				<section>
+					<header class="major">
+						<h2>Get in touch</h2>
+					</header>
+					<p>Sed varius enim lorem ullamcorper dolore aliquam aenean
+						ornare velit lacus, ac varius enim lorem ullamcorper dolore. Proin
+						sed aliquam facilisis ante interdum. Sed nulla amet lorem feugiat
+						tempus aliquam.</p>
+					<ul class="contact">
+						<li class="icon solid fa-envelope"><a href="#">minishelll777@gmail.com</a></li>
+						<li class="icon solid fa-phone">010-0000-0000</li>
+						<li class="icon solid fa-home">1234 Somewhere Road #8254<br />
+							Nashville, TN 00000-0000
+						</li>
+					</ul>
+				</section>
+
+				<!-- Footer -->
+				<footer id="footer">
+					<p class="copyright">
+						&copy; Untitled. All rights reserved. Demo Images: <a
+							href="https://unsplash.com">Unsplash</a>. Design: <a
+							href="https://html5up.net">HTML5 UP</a>.
+					</p>
+				</footer>
+
+			</div>
+		</div>
+
+	</div>
+
+	<!-- Scripts -->
+	<script>
+	$("#register").click(function(){
+		  $("#reviewForm").attr("action", "/books/board");
+	    $("#reviewForm").submit();
+
+	  
+	});
+	   
+	    $("#logout_button").click(function(){
+	     
+	        $.ajax({
+	            type:"POST",
+	            url:"/member/logout.do",
+	            success:function(data){
+	            	Swal.fire({
+	            		  position: 'center',
+	            		  icon: 'success',
+	            		  title: '로그아웃 되었습니다',
+	            		  showConfirmButton: false,
+	            		  timer: 1500
+	            		})
+	            		setTimeout("document.location.reload();",1800);
+	    
+	            } 
+	        });
+	    });
+	    var lang_kor = {
+	            "decimal" : "",
+	            "emptyTable" : "데이터가 없습니다.",
+	            "info" : "_START_ - _END_ (총 _TOTAL_ 명)",
+	            "infoEmpty" : "0명",
+	            "infoFiltered" : "(전체 _MAX_ 명 중 검색결과)",
+	            "infoPostFix" : "",
+	            "thousands" : ",",
+	            "lengthMenu" : "_MENU_ 개씩 보기",
+	            "loadingRecords" : "로딩중...",
+	            "processing" : "처리중...",
+	            "search" : "검색 : ",
+	            "zeroRecords" : "검색된 데이터가 없습니다.",
+	            "paginate" : {
+	                "first" : "첫 페이지",
+	                "last" : "마지막 페이지",
+	                "next" : "다음",
+	                "previous" : "이전"
+	            },
+	            "aria" : {
+	                "sortAscending" : " :  오름차순 정렬",
+	                "sortDescending" : " :  내림차순 정렬"
+	            }
+	        };
+	     
+	    $(document).ready(function(){
+	        $('#reviewTable').dataTable({
+	            pageLength: 10,
+	            bPaginate: true,
+	            bLengthChange: false,
+	            lengthMenu : [ [ 3, 5, 10, -1 ], [ 3, 5, 10, "All" ] ],
+	            bAutoWidth: false,
+	            processing: true,
+	            ordering: false,
+	            serverSide: false,
+	            bInfo : false,
+	            language : lang_kor,
+	            searching: true,
+	            ajax : {
+	                url:"/books/bookList?goods_id="+${goods.goods_id},
+	                type:"GET",
+	                dataSrc:''
+	            },
+	            columns : [
+	            	{data: "title"},
+	            	{data: "userid"},
+		              
+	            	  { 
+	                      "data": "bid",
+	                      "render": function(data, type, row, meta){
+	                    
+	                         if(type === 'display'){
+	                             data = '<a href="/books/boardDetail?bid='+data+'">' +'상세' + '</a>';
+	                         }
+
+	                         return data;
+	                      }
+	                   }
+	                
+	              
+	          
+	            ]
+
+	        });
+
+	    });
+	</script>
+	<script type="text/javascript">
+	
+	function fn_order_each_goods(goods_id,goods_title,goods_sales_price,fileName){
+	
+		
+		
+			var total_price,final_total_price;
+			var order_goods_qty=document.getElementById("order_goods_qty");
+			
+			var formObj=document.createElement("form");
+			var i_goods_id = document.createElement("input"); 
+	    var i_goods_title = document.createElement("input");
+	    var i_goods_sales_price=document.createElement("input");
+	    var i_fileName=document.createElement("input");
+	    var i_order_goods_qty=document.createElement("input");
+	    
+	    i_goods_id.name="goods_id";
+	    i_goods_title.name="goods_title";
+	    i_goods_sales_price.name="goods_sales_price";
+	    i_fileName.name="goods_fileName";
+	    i_order_goods_qty.name="order_goods_qty";
+	    
+	    i_goods_id.value=goods_id;
+	    i_order_goods_qty.value=order_goods_qty.value;
+	    i_goods_title.value=goods_title;
+	    i_goods_sales_price.value=goods_sales_price;
+	    i_fileName.value=fileName;
+	    
+	    formObj.appendChild(i_goods_id);
+	    formObj.appendChild(i_goods_title);
+	    formObj.appendChild(i_goods_sales_price);
+	    formObj.appendChild(i_fileName);
+	    formObj.appendChild(i_order_goods_qty);
+
+	    document.body.appendChild(formObj); 
+	    formObj.method="post";
+	    formObj.action="${contextPath}/order/orderEachGoods";
+	    formObj.submit();
+		}	
+		var loopSearch=true;
+		function keywordSearch(){
+			if(loopSearch==false)
+				return;
+		 var value=document.search_form.search.value;
+			$.ajax({
+				type : "get",
+				async : true, 
+				url : "${contextPath}/books/keywordSearch.do",
+				data : {keyword:value},
+				success : function(data, textStatus) {
+				    var jsonInfo = JSON.parse(data);
+					displayResult(jsonInfo);
+				},
+				error : function(data, textStatus) {
+					alert("에러가 발생했습니다."+data);
+				},
+				complete : function(data, textStatus) {
+					
+					
+				}
+			}); 	
+		}
+		
+		function displayResult(jsonInfo){
+			var count = jsonInfo.keyword.length;
+			if(count > 0) {
+			    var html = '';
+			    for(var i in jsonInfo.keyword){
+				   html += "<a href=\"javascript:select('"+jsonInfo.keyword[i]+"')\">"+jsonInfo.keyword[i]+"</a><br/>";
+			    }
+			    var listView = document.getElementById("suggestList");
+			    listView.innerHTML = html;
+			    show('suggest');
+			}else{
+			    hide('suggest');
+			} 
+		}
+		
+		function select(selectedKeyword) {
+			 document.search_form.search.value=selectedKeyword;
+			 loopSearch = true;
+			 hide('suggest');
+		}
+			
+		function show(elementId) {
+			 var element = document.getElementById(elementId);
+			 if(element) {
+			  element.style.display = 'block';
+			 }
+			}
+		
+		function hide(elementId){
+		   var element = document.getElementById(elementId);
+		   if(element){
+			  element.style.display = 'none';
+		   }
+		}
+		function add_cart(goods_id) {
+			$.ajax({
+				type : "post",
+				async : false, 
+				url : "/cart/addGoodsInCart",
+				data : {
+					goods_id:goods_id
+					
+				},
+				success : function(data, textStatus) {
+					//alert(data);
+				//	$('#message').append(data);
+					if(data.trim()=='add_success'){
+						Swal.fire({
+		            		  position: 'center',
+		            		  icon: 'success',
+		            		  title: '장바구니에 담았습니다',
+		            		  showConfirmButton: false,
+		            		  timer: 1500
+		            		})
+					}else if(data.trim()=='already_existed'){
+						Swal.fire({
+		            		  position: 'center',
+		            		  icon: 'error',
+		            		  title: '이미 담긴 상품입니다',
+		            		  showConfirmButton: false,
+		            		  timer: 1500
+		            		})
+					}
+					
+				},
+				error : function(data, textStatus) {
+					alert("에러가 발생했습니다."+data);
+				},
+				complete : function(data, textStatus) {
+					//alert("작업을완료 했습니다");
+				}
+			}); 
 		}
 	
-	function hide(elementId){
-	   var element = document.getElementById(elementId);
-	   if(element){
-		  element.style.display = 'none';
-	   }
-	}
+	    /* 로그인 버튼 클릭 메서드 */
+	    $("#login_button").click(function(){
+	    	  $("#login_form").attr("action", "/member/login");
+	          $("#login_form").submit();
+	     
+	        
+	    });
+	    $(function(){
+	    	  $('.tabcontent > div').hide();
+	    	  $('.tabnav a').click(function () {
+	    	    $('.tabcontent > div').hide().filter(this.hash).fadeIn();
+	    	    $('.tabnav a').removeClass('active');
+	    	    $(this).addClass('active');
+	    	    return false;
+	    	  }).filter(':eq(0)').click();
+	    	  });
+	</script>
+<!-- 	<script src="/resources/assets/js/jquery.min.js"></script> -->
+	<script src="/resources/assets/js/browser.min.js"></script>
+	<script src="/resources/assets/js/breakpoints.min.js"></script>
+	<script src="/resources/assets/js/util.js"></script>
+	<script src="/resources/assets/js/main.js"></script>
 
-</script>
 </body>
 </html>

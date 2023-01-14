@@ -30,6 +30,14 @@ public class BookService {
 
 	}
 
+	public Map<String, List<BookVO>> listAllGoods() throws Exception {
+		Map<String, List<BookVO>> bookMap = new HashMap<String, List<BookVO>>();
+		List<BookVO> bookList = bookMapper.selectAllGoodsList();
+		bookMap.put("bookList", bookList);
+		return bookMap;
+
+	}
+
 	public Map goodsDetail(String _goods_id) throws Exception {
 		Map goodsMap = new HashMap();
 		BookVO booksVO = bookMapper.selectGoodsDetail(_goods_id);
@@ -42,6 +50,12 @@ public class BookService {
 	public List<BookVO> selectGoodsList(String goodsStatus) throws DataAccessException {
 
 		return bookMapper.selectGoodsList(goodsStatus);
+
+	}
+
+	public List<BookVO> selectAllGoodsList() throws DataAccessException {
+
+		return bookMapper.selectAllGoodsList();
 
 	}
 

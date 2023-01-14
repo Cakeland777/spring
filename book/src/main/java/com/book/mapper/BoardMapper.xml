@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.book.mapper.BoardMapper">
+<resultMap id="boardResult" type="com.book.model.BoardVO">
+	   <result property="bid" column="bid" />
+	   <result property="goods_id" column="goods_id" />
+	   <result property="title" column="title" />
+	   <result property="userid" column="userid" />
+	   <result property="content" column="content" />
+	</resultMap>
+
+	<insert id="insertBoard" parameterType="com.book.model.BoardVO"   >
+		<selectKey resultType="String" keyProperty="bid" order="BEFORE">
+	    	select seq_bid.nextval from dual
+	    </selectKey>
+	
+	    <![CDATA[
+		   insert into book_board (bid,parent_id,goods_id,title,userid,content)
+											   					values(#{bid},
+											   					#{bid},
+											   					 			 #{goods_id},
+											   							 	 #{title},
+											   								 #{userid},
+											   								 #{content} )
+		]]>
+	</insert> 
+<insert id="insertBoardReply" parameterType="com.book.model.BoardVO"   >
+		
+	
+	    <![CDATA[
+		   insert into book_board (bid,parent_id,goods_id,title,userid,content)
+											   					values(seq_bid.nextval,
+											   					#{parent_id},
+											   					 			 #{goods_id},
+											   							 	 #{title},
+											   								 #{userid},
+											   								 #{content} )
+		]]>
+	</insert> 
+		<delete id="deleteBoard" parameterType="String">
+	    <![CDATA[
+	      delete from book_board
+	      where bid=#{bid} or parent_id=#{bid}
+    	]]>
+	</delete>
+<select id="boardList"  resultType="com.book.model.BoardVO">
+        select * from book_board where goods_id=#{goods_id} order by parent_id,bid asc
+    </select>
+
+
+<select id="boardDetail"  resultType="com.book.model.BoardVO">
+        select * from book_board where bid=#{bid}
+    </select>
+
+</mapper>

@@ -10,6 +10,8 @@ public interface BookMapper {
 
 	public List<BookVO> selectGoodsList(String goodsStatus);
 
+	public List<BookVO> selectAllGoodsList();
+
 	public List<String> selectKeywordSearch(String keyword);
 
 	public ArrayList selectGoodsBySearchWord(String searchWord);

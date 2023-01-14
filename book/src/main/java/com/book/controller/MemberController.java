@@ -129,11 +129,12 @@ public class MemberController {
 
 	}
 
-	@RequestMapping(value = "/pwdUpdate", method = RequestMethod.POST)
-	@ResponseBody
-	public void resetPwd(HttpServletRequest request, String pwd, String userid) throws Exception {
+	@RequestMapping(value = "/pwdUpdate.do", method = RequestMethod.POST)
+//	@ResponseBody
+	public String resetPwd(HttpServletRequest request, String pwd, String userid) throws Exception {
 
 		memberservice.resetPwd(pwd, userid);
+		return "redirect:/member/login";
 
 	}
 
@@ -185,7 +186,7 @@ public class MemberController {
 
 	}
 
-	@RequestMapping(value = "login", method = RequestMethod.POST)
+	@RequestMapping(value = "login.do", method = RequestMethod.POST)
 	public String loginPOST(HttpServletRequest request, MemberVO member, RedirectAttributes rttr) throws Exception {
 
 		HttpSession session = request.getSession();
@@ -241,7 +242,7 @@ public class MemberController {
 		String setFrom = "관리자 <minishelll777@gmail.com>";
 		String toMail = email;
 		String title = "비밀번호 초기화 인증번호";
-		String content = "인증번호는 " + "<b>" + checkNum + "<b>" + " 입니다" + "<br>";
+		String content = "인증번호는 " + "<b>" + checkNum + "</b>" + " 입니다" + "<br>";
 		try {
 
 			MimeMessage message = mailSender.createMimeMessage();

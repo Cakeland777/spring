@@ -4,7 +4,7 @@
 <resultMap id="cartResult" type="com.book.model.CartVO">
 		<result property="cart_id" column="cart_id" />
 		<result property="goods_id" column="goods_id" />
-		<result property="member_id" column="member_id" />
+		<result property="userid" column="userid" />
 		<result property="cart_goods_qty" column="cart_goods_qty" />
 		<result property="creDate" column="creDate" />
 	</resultMap>
@@ -34,9 +34,9 @@
    
  <select id="selectCartList"  parameterType="com.book.model.CartVO"  resultMap="cartResult"   >
 	    <![CDATA[
-		select cart_id, goods_id, member_id, cart_goods_qty, creDate 
+		select cart_id, goods_id, userid, cart_goods_qty, creDate 
 		from t_shopping_cart 
-		where member_id=#{member_id} 
+		where userid=#{userid} 
 		]]>
 	</select>
 
@@ -57,7 +57,7 @@
 	    <![CDATA[
 		    select decode(count(*), 0, 'false', 'true') from t_shopping_cart
 			where goods_id=#{goods_id}
-			  and member_id=#{member_id} 
+			  and userid=#{userid} 
 
     	]]>
 	</select>
@@ -66,10 +66,10 @@
 	    <![CDATA[
 		    	insert into t_shopping_cart(cart_id,
 		    	                           goods_id,
-		    	                           member_id)
+		    	                           userid)
 		        				 values(#{cart_id},
     							        #{goods_id},
-    							        #{member_id})
+    							        #{userid})
     	]]>
 	</insert>
 
@@ -77,7 +77,7 @@
 	    <![CDATA[
 			update t_shopping_cart
 			       set cart_goods_qty=#{cart_goods_qty}
-		 	       where member_id=#{member_id}
+		 	       where userid=#{userid}
 			        and goods_id=#{goods_id}
     	]]>
 	</update>

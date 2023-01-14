@@ -26,6 +26,17 @@ public class BookController {
 	private BookService bookService;
 	private static final Logger logger = LoggerFactory.getLogger(BookController.class);
 
+//	@RequestMapping(value = "/main", method = { RequestMethod.POST, RequestMethod.GET })
+//	public ModelAndView main(HttpServletRequest request, HttpServletResponse response) throws Exception {
+//		HttpSession session;
+//		ModelAndView mav = new ModelAndView();
+//		String viewName = (String) request.getAttribute("viewName");
+//		mav.setViewName(viewName);
+//		session = request.getSession();
+//		Map<String, List<BookVO>> goodsMap = bookService.listGoods();
+//		mav.addObject("goodsMap", goodsMap);
+//		return mav;
+//	}
 	@RequestMapping(value = "/main", method = { RequestMethod.POST, RequestMethod.GET })
 	public ModelAndView main(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		HttpSession session;

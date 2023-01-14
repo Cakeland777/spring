@@ -3,7 +3,7 @@ package com.book.model;
 public class CartVO {
 	private int cart_id;
 	private int goods_id;
-	private String member_id;
+	private String userid;
 	private int cart_goods_qty;
 	private String creDate;
 
@@ -23,12 +23,12 @@ public class CartVO {
 		this.goods_id = goods_id;
 	}
 
-	public String getMember_id() {
-		return member_id;
+	public String getUserid() {
+		return userid;
 	}
 
-	public void setMember_id(String member_id) {
-		this.member_id = member_id;
+	public void setUserid(String userid) {
+		this.userid = userid;
 	}
 
 	public int getCart_goods_qty() {

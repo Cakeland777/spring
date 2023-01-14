@@ -30,9 +30,11 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import com.book.model.BookVO;
 import com.book.model.ImageFileVO;
 import com.book.model.MemberVO;
+import com.book.model.OrderVO;
 import com.book.service.AdminService;
 import com.book.service.BookService;
 import com.book.service.MemberService;
+import com.book.service.OrderService;
 
 @Controller
 @RequestMapping("/admin")
@@ -44,6 +46,9 @@ public class AdminController {
 	private BookService bookService;
 	@Autowired
 	private AdminService adminService;
+	@Autowired
+	private OrderService orderService;
+
 	private static final Logger logger = LoggerFactory.getLogger(AdminController.class);
 
 	@RequestMapping(value = "main", method = RequestMethod.GET)
@@ -84,10 +89,23 @@ public class AdminController {
 
 	}
 
+	@RequestMapping(value = "orderList", method = RequestMethod.GET)
+	public void orderListGET() throws Exception {
+
+	}
+
 	@ResponseBody
 	@RequestMapping(value = "/bookList.do", method = RequestMethod.POST)
 	public List<BookVO> bookAll(Model model) throws Exception {
 		List<BookVO> data = bookService.bookList();
+		model.addAttribute("data", data);
+		return data;
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/orderList.do", method = RequestMethod.POST)
+	public List<OrderVO> orderAll(Model model) throws Exception {
+		List<OrderVO> data = orderService.orderList();
 		model.addAttribute("data", data);
 		return data;
 	}
