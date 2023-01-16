@@ -118,5 +118,7 @@
 	  delete from t_shopping_cart
 	  where goods_id=#{goods_id}
 	</delete>
-
+<select id="AdminOrderDetail"  resultType="com.book.model.OrderVO">
+        select * FROM t_shopping_order where order_id=#{order_id}
+    </select>
 </mapper>

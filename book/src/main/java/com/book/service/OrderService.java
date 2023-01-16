@@ -72,4 +72,9 @@ public class OrderService {
 
 		return orderMapper.orderList();
 	}
+
+	public OrderVO AdminOrderDetail(String order_id) throws Exception {
+
+		return orderMapper.AdminOrderDetail(order_id);
+	}
 }

@@ -13,6 +13,6 @@ public class GetSessionUser {
 				.currentRequestAttributes();
 		HttpSession httpSession = servletRequestAttribute.getRequest().getSession(true);
 
-		return (MemberVO) httpSession.getAttribute("member"); // 로그인할때 userVo란 이름으로 세션정보가 담아있다.
+		return (MemberVO) httpSession.getAttribute("member");
 	}
 }

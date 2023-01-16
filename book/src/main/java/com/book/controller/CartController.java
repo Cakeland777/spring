@@ -57,11 +57,10 @@ public class CartController {
 		cartVO.setUserid(member_id);
 		Map<String, List> cartMap = cartService.myCartList(cartVO);
 		session.setAttribute("cartMap", cartMap);
-
 		return mav;
 	}
 
-	@RequestMapping(value = "/modifyCartQty.do", method = RequestMethod.POST)
+	@RequestMapping(value = "/modifyCartQty", method = RequestMethod.POST)
 	public @ResponseBody String modifyCartQty(@RequestParam("goods_id") int goods_id,
 			@RequestParam("cart_goods_qty") int cart_goods_qty, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
@@ -80,5 +79,14 @@ public class CartController {
 			return "modify_failed";
 		}
 
+	}
+
+	@RequestMapping(value = "/removeCartGoods", method = RequestMethod.POST)
+	public ModelAndView removeCartGoods(@RequestParam("cart_id") int cart_id, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		ModelAndView mav = new ModelAndView();
+		cartService.removeCartGoods(cart_id);
+		mav.setViewName("redirect:/cart/myCartList");
+		return mav;
 	}
 }

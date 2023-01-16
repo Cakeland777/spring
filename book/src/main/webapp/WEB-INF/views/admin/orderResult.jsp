@@ -6,7 +6,7 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-<title>로그인</title>
+<title>주문내역</title>
 <meta charset="utf-8" />
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, user-scalable=no" />
@@ -14,15 +14,18 @@
 <script src="https://code.jquery.com/jquery-3.4.1.js"
 	integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
 	crossorigin="anonymous"></script>
-	<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-	
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
 	integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
 	crossorigin="anonymous" referrerpolicy="no-referrer" />
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css">
+<style>
+td{
+vertical-align: middle;
 
+}
+</style>
 </head>
 <body class="is-preload">
 
@@ -65,64 +68,160 @@
 		
 				<section>
 					<header class="major">
-						<h2>회원정보수정</h2>
+						<h2>주문내역</h2>
 					</header>
 					<div class="features">
 
 						<article>
 							
 							<div class="content">
-							<form method="post" id="update_form">
-					<table>
-			<tbody>
-				<tr>
-					<td class="fixed">아이디</td>
-					<td class="active"><span >
-					 <input type="text" id="userid"name="userid" value="${member.userid}" required readonly="readonly">
-					</span></td>
-				</tr>
-				<tr class="dot_line">
-					<td class="fixed">비밀번호</td>
-					<td class="active"><span >
-				         <input type="text" value="${member.pwd}" id="pwd"name="pwd" ></span></td>
-				</tr>
-				<tr class="dot_line">
-					<td class="fixed">이름</td>
-					<td class="active"><span >
-				         <input type="text" value="${member.name}" id="name"name="name" ></span></td>
-				</tr>
-				<tr  class="dot_line">
-					<td class="fixed">이메일</td>
-					<td class="active"><input type="text" value="${member.email}" id="email"name="email" ></td>
-				</tr>
-					<tr  class="dot_line">
-					<td class="fixed">전화번호</td>
-					<td class="active"><input type="text" value="${member.phone}" id="phone"name="phone" ></td>
-				</tr>
+					
+													<H3>1.최종 주문 내역서</H3>
+	<TABLE class="list_view" style="width: 1000px;">
+		<TBODY align=center>
+			<tr style="background: mistyrose;">
+			     <td>주문번호 </td>
+				<td colspan=2 class="fixed">주문상품명</td>
+				<td>수량</td>
+				<td>주문금액</td>
+				<td>배송비</td>
+				<td>예상적립금</td>
+				<td>주문금액합계</td>
+			</tr>
+			<TR>
 				
-				<tr class="dot_line">
-					<td class="fixed">우편번호</td>
-					<td class="active"><input type="text" value="${member.addr1}" id="addr1"name="addr1" > </td>
-					<td class="active"><button type="button" class="button primary" onclick="search_address()" >
-											주소검색</button></td>
-				</tr>
+				    <td> ${myOrderList.order_id }</td>
+					<TD class="goods_image">
+					  <a href="${contextPath}/books/booksDetail.do?goods_id=${myOrderList.goods_id }">
+					    <IMG width="75" alt=""  src="${contextPath}/thumbnails.do?goods_id=${myOrderList.goods_id}&fileName=${myOrderList.goods_fileName}">
+					  </a>
+					</TD>
+					<TD>
+					  
+					     <A href="${contextPath}/books/booksDetail.do?goods_id=${myOrderList.goods_id }">${myOrderList.goods_title }</A>
+					  
+					</TD>
+					<td>
+					  ${myOrderList.order_goods_qty }개
+					</td>
+					<td>${myOrderList.order_goods_qty *myOrderList.goods_sales_price}원 (10% 할인)</td>
+					<td>0원</td>
+					<td>${1500 *myOrderList.order_goods_qty }원</td>
+					<td>
+					  ${myOrderList.order_goods_qty *myOrderList.goods_sales_price}원
+					</td>
+			</TR>
+		
+		</TBODY>
+	</TABLE>
+	<DIV class="clear"></DIV>
+<form  name="form_order">
+	<br>
+	<br>
+	<H3>2.배송지 정보</H3>
+	<DIV class="detail_table">
+		<TABLE>
+			<TBODY>
+				<TR class="dot_line">
+					<TD class="fixed_join">배송방법</TD>
+					<TD>
+					   ${myOrderList.delivery_method }
+				    </TD>
+				</TR>
+				<TR class="dot_line">
+					<TD class="fixed_join">받으실 분</TD>
+					<TD>
+					${myOrderList.receiver_name }
+					</TD>
+				</TR>
+				<TR class="dot_line">
+					<TD class="fixed_join">휴대폰번호</TD>
+					<TD>
+					  ${myOrderList.orderer_hp}</TD>
+				  </TR>
 
-					<tr class="dot_line">
-					<td class="fixed">주소</td>
-					<td class="active"><input type="text" value="${member.addr2}" id="addr2"name="addr2" ></td>
-				</tr>
-					<tr class="dot_line">
-					<td class="fixed">상세주소</td>
-					<td class="active"><input type="text" value="${member.addr3}" id="addr3"name="addr3" ></td>
-				</tr>
-			
-			</tbody>
+
+				<TR class="dot_line">
+					<TD class="fixed_join">주소</TD>
+					<td>
+					   ${myOrderList.addr1}
+					</td>
+				</TR>
+				<TR class="dot_line">
+					<TD class="fixed_join">배송 메시지</TD>
+					<TD>
+					${myOrderList.delivery_message}
+					</TD>
+				</TR>
+				<TR class="dot_line">
+					<TD class="fixed_join">선물 포장</TD>
+					<td>
+					${myOrderList.gift_wrapping}
+					</td>
+				</TR>
+			</TBODY>
+		</TABLE>
+		
+	</DIV>
+	<div >
+	  <br><br>
+	   <h3>주문고객</h3>
+		 <table >
+		   <TBODY>
+			 <tr class="dot_line">
+				<td >이름</td>
+				<td>
+				 <input  type="text" value="${myOrderList.orderer_name}" size="15" disabled />
+				</td>
+			  </tr>
+			  <tr class="dot_line">
+				<td >핸드폰</td>
+				<td>
+				 <input  type="text" value="${myOrderList.orderer_hp}" size="15" disabled />
+				</td>
+			  </tr>
+		   </TBODY>
 		</table>
-<div class="button_container" >
-<button type="submit" id="update" class="btn" ><span>수정하기</span></button>
-  <button type="button" class="btn" onclick="location.href='/main'" ><span>취소</span></button>
-  </form>
-          </div>
+	</div>
+	<DIV class="clear"></DIV>
+	<br>
+	<br>
+	<br>
+	<H3>3.결제정보</H3>
+	<DIV class="detail_table">
+		<table>
+			<TBODY>
+				<TR class="dot_line">
+					<TD class="fixed_join">결제방법</TD>
+					<TD>
+					   ${myOrderList.pay_method }
+				    </TD>
+				</TR>
+				<TR class="dot_line">
+					<TD class="fixed_join">결제카드</TD>
+					<TD>
+					   ${myOrderList.card_com_name}
+				    </TD>
+				</TR>
+				<TR class="dot_line">
+					<TD class="fixed_join">할부기간</TD>
+					<TD>
+					   ${myOrderList.card_pay_month }
+				    </TD>
+				</TR>
+			</TBODY>
+		</table>
+	</DIV>
+</form>
+    <DIV class="clear"></DIV>
+	<br>
+	<br>
+	<br>
+	<center>
+		<br>
+		<br> 
+	<a href="${contextPath}/main" class="button">돌아가기</a>
+<DIV class="clear"></DIV>		
 							</div>
 						</article>
 			
@@ -157,7 +256,7 @@
 				</section>
 
 				<!-- Menu -->
-					<nav id="menu">
+						<nav id="menu">
 					<header class="major">
 						<h2>Menu</h2>
 					</header>
@@ -215,25 +314,6 @@
 
 	<!-- Scripts -->
 	<script>
-	$(document).ready(function(){
-		
-
-		$("#update").click(function(){
-			 var id = $('#userid').val();                 
-		        var pw = $('#pwd').val();                
-		               
-		        var name = $('#name').val();            
-		        var mail = $('#email').val();          
-		        var addr = $('#addr1').val(); 
-				
-				  $("#update_form").attr("action", "/member/update");
-					$("#update_form").submit();
-					
-					
-			  return false;
-		 
-		});
-	});
 		$("#logout_button").click(function() {
 
 			$.ajax({
@@ -279,54 +359,7 @@
 				}
 			});
 		}
-		function search_address(){
-			 
-		    new daum.Postcode({
-		        oncomplete: function(data) {
-		        	 
-		        
-		        	                var addr = ''; // 주소 변수
-		        	                var extraAddr = ''; // 참고항목 변수
-		        	 
-		        	          
-		        	                if (data.userSelectedType === 'R') { 
-		        	                    addr = data.roadAddress;
-		        	                } else { // 사용자가 지번 주소를 선택했을 경우(J)
-		        	                    addr = data.jibunAddress;
-		        	                }
-		        	 
-		        	               
-		        	                if(data.userSelectedType === 'R'){
-		        	                   
-		        	                    if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
-		        	                        extraAddr += data.bname;
-		        	                    }
-		        	           
-		        	                    if(data.buildingName !== '' && data.apartment === 'Y'){
-		        	                        extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
-		        	                    }
-		        	                  
-		        	                    if(extraAddr !== ''){
-		        	                        extraAddr = ' (' + extraAddr + ')';
-		        	                    }
-		        	                    
-		        	                    addr += extraAddr;
-		        	                
-		        	                } else {
-		        	                	  addr += ' ';
-		        	                }
-		        	 
-		        	                $("#addr1").val(data.zonecode);
-		        	               
-		        	                $("#addr2").val(addr);
-		        	                
-		        	                // 커서를 상세주소 필드로 이동한다.
-		        	                $("#addr3").attr("readonly",false);
-		        	                $("#addr3").focus();       	     
-		        }
-		    }).open();     
-		}
-		
+
 		function displayResult(jsonInfo) {
 			var count = jsonInfo.keyword.length;
 			if (count > 0) {

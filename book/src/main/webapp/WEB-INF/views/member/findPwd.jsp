@@ -136,77 +136,47 @@
 				</section>
 
 				<!-- Menu -->
-				<nav id="menu">
+					<nav id="menu">
 					<header class="major">
 						<h2>Menu</h2>
 					</header>
 					<ul>
-						<li><a href="index.html">Homepage</a></li>
-						<li><a href="generic.html">Generic</a></li>
-						<li><a href="elements.html">Elements</a></li>
-						<li><span class="opener">Submenu</span>
+						<li><a href="/main">메인페이지</a></li>
+						<li><a href="/books/allBooks">전체도서</a></li>
+						 <c:if test="${member!=null }">
+						<li><span class="opener">마이페이지</span>
 							<ul>
-								<li><a href="#">Lorem Dolor</a></li>
-								<li><a href="#">Ipsum Adipiscing</a></li>
-								<li><a href="#">Tempus Magna</a></li>
-								<li><a href="#">Feugiat Veroeros</a></li>
+								<li><a href="/member/mypage">회원정보조회</a></li>
+								<li><a href="/member/updateMember">회원정보수정</a></li>
+								<li><a href="/member/deletePage">회원탈퇴</a></li>
 							</ul></li>
-						<li><a href="#">Etiam Dolore</a></li>
-						<li><a href="#">Adipiscing</a></li>
-						<li><span class="opener">Another Submenu</span>
+										
+							</c:if>
+							 <c:if test="${member.userid eq 'admin' }">
+					
+						<li><span class="opener">관리자페이지</span>
 							<ul>
-								<li><a href="#">Lorem Dolor</a></li>
-								<li><a href="#">Ipsum Adipiscing</a></li>
-								<li><a href="#">Tempus Magna</a></li>
-								<li><a href="#">Feugiat Veroeros</a></li>
+								<li><a href="/admin/userList">회원관리</a></li>
+								<li><a href="/admin/bookList">상품관리</a></li>
+								<li><a href="/admin/orderList">주문관리</a></li>
 							</ul></li>
-						<li><a href="#">Maximus Erat</a></li>
-						<li><a href="#">Sapien Mauris</a></li>
-						<li><a href="#">Amet Lacinia</a></li>
+									
+							</c:if>
 					</ul>
+		
 				</nav>
 
-				<!-- Section -->
+	
 				<section>
 					<header class="major">
-						<h2>Ante interdum</h2>
+						<h2>문의사항</h2>
 					</header>
-					<div class="mini-posts">
-						<article>
-							<a href="#" class="image"><img src="images/pic07.jpg" alt="" /></a>
-							<p>Aenean ornare velit lacus, ac varius enim lorem
-								ullamcorper dolore aliquam.</p>
-						</article>
-						<article>
-							<a href="#" class="image"><img src="images/pic08.jpg" alt="" /></a>
-							<p>Aenean ornare velit lacus, ac varius enim lorem
-								ullamcorper dolore aliquam.</p>
-						</article>
-						<article>
-							<a href="#" class="image"><img src="images/pic09.jpg" alt="" /></a>
-							<p>Aenean ornare velit lacus, ac varius enim lorem
-								ullamcorper dolore aliquam.</p>
-						</article>
-					</div>
-					<ul class="actions">
-						<li><a href="#" class="button">More</a></li>
-					</ul>
-				</section>
-
-				<!-- Section -->
-				<section>
-					<header class="major">
-						<h2>Get in touch</h2>
-					</header>
-					<p>Sed varius enim lorem ullamcorper dolore aliquam aenean
-						ornare velit lacus, ac varius enim lorem ullamcorper dolore. Proin
-						sed aliquam facilisis ante interdum. Sed nulla amet lorem feugiat
-						tempus aliquam.</p>
+					<p>문의사항이 있으신 분은 다음의 연락처로 연락주시기 바랍니다.</p>
 					<ul class="contact">
 						<li class="icon solid fa-envelope"><a href="#">minishelll777@gmail.com</a></li>
-						<li class="icon solid fa-phone">010-0000-0000</li>
-						<li class="icon solid fa-home">1234 Somewhere Road #8254<br />
-							Nashville, TN 00000-0000
+						<li class="icon solid fa-phone">010-9898-9628</li>
+						<li class="icon solid fa-home">서울특별시 종로구 혜화동<br />
+							
 						</li>
 					</ul>
 				</section>
@@ -214,9 +184,7 @@
 				<!-- Footer -->
 				<footer id="footer">
 					<p class="copyright">
-						&copy; Untitled. All rights reserved. Demo Images: <a
-							href="https://unsplash.com">Unsplash</a>. Design: <a
-							href="https://html5up.net">HTML5 UP</a>.
+						&copy; 유진
 					</p>
 				</footer>
 

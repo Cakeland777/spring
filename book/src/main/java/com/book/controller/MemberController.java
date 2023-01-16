@@ -200,7 +200,8 @@ public class MemberController {
 		}
 
 		session.setAttribute("member", mem);
-
+		String userid = mem.getUserid();
+		session.setAttribute("user_name", userid);
 		return "redirect:/main";
 	}
 

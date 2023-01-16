@@ -20,4 +20,6 @@ public interface OrderMapper {
 	int selectOrderID() throws DataAccessException;
 
 	public List<OrderVO> orderList() throws DataAccessException;
+
+	public OrderVO AdminOrderDetail(String order_id) throws DataAccessException;
 }

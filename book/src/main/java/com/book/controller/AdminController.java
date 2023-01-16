@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.book.model.BookVO;
 import com.book.model.ImageFileVO;
@@ -92,6 +93,20 @@ public class AdminController {
 	@RequestMapping(value = "orderList", method = RequestMethod.GET)
 	public void orderListGET() throws Exception {
 
+	}
+
+	@RequestMapping(value = "/orderResult", method = RequestMethod.GET)
+	public ModelAndView payToOrderGoods(String order_id, HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+		String viewName = (String) request.getAttribute("viewName");
+		ModelAndView mav = new ModelAndView(viewName);
+
+		HttpSession session = request.getSession();
+		MemberVO member = (MemberVO) session.getAttribute("member");
+		OrderVO order = orderService.AdminOrderDetail(order_id);
+
+		mav.addObject("myOrderList", order);
+		return mav;
 	}
 
 	@ResponseBody
